@@ -1,0 +1,62 @@
+{
+  "engine": "llama.cpp",
+  "endpoint": "http://127.0.0.1:18911",
+  "model": "hy4-flash",
+  "scenario": "prefill",
+  "prefill": [
+    {
+      "prompt_sha256": "f6f3d37d67211ca7f2a680c95107b422d920b43a523738d5aed925671dce0028",
+      "completion_tokens": 9,
+      "prompt_tokens": 32762,
+      "ttft_s": 47.04958939002245,
+      "decode_tok_s": 44.93984809955077,
+      "finish_reason": "stop",
+      "reasoning_seen": false,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 32762,
+        "prompt_ms": 47009.696,
+        "prompt_per_token_ms": 1.4348848055674257,
+        "prompt_per_second": 696.9200566623531,
+        "predicted_n": 9,
+        "predicted_ms": 176.876,
+        "predicted_per_token_ms": 22.1095,
+        "predicted_per_second": 45.22942626472783,
+        "draft_n": 6,
+        "draft_n_accepted": 6
+      },
+      "target_prompt_tokens": 32768,
+      "sized_prompt_tokens": 32762,
+      "audit_code_matched": true,
+      "engine_prefill_tok_s": 696.9200566623532,
+      "client_prefill_tok_s": 696.3291375067273
+    },
+    {
+      "prompt_sha256": "c6c922a5748794c71b4eb22d881605ac64ef931a704bcd44b8bae0274a8724f6",
+      "completion_tokens": 8,
+      "prompt_tokens": 131073,
+      "ttft_s": 223.65474223802448,
+      "decode_tok_s": 36.120060502234814,
+      "finish_reason": "stop",
+      "reasoning_seen": false,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 131073,
+        "prompt_ms": 223377.275,
+        "prompt_per_token_ms": 1.704220358121047,
+        "prompt_per_second": 586.7785789758605,
+        "predicted_n": 8,
+        "predicted_ms": 193.784,
+        "predicted_per_token_ms": 27.68342857142857,
+        "predicted_per_second": 36.12269330801305,
+        "draft_n": 6,
+        "draft_n_accepted": 6
+      },
+      "target_prompt_tokens": 131072,
+      "sized_prompt_tokens": 131073,
+      "audit_code_matched": true,
+      "engine_prefill_tok_s": 586.7785789758605,
+      "client_prefill_tok_s": 586.0506184148137
+    }
+  ]
+}

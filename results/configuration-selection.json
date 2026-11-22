@@ -1,0 +1,5 @@
+{
+  "chosen_decode_candidate": "mtp-three",
+  "accepted": [],
+  "rule": "Over 3% higher median decode and at most 3% TTFT regression against both neighboring controls."
+}

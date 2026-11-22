@@ -1,0 +1,13 @@
+{
+  "file_bytes_by_group_with_alignment": {
+    "lm_head": 208797696,
+    "backbone_other": 4126485824,
+    "engram_table": 67320654432,
+    "token_embedding_table": 394395648,
+    "routed_experts": 83575701504,
+    "draft": 3980025984
+  },
+  "active_routed_weight_byte_estimate": 2611740672,
+  "backbone_and_head_byte_estimate": 4335283520,
+  "note": "The per-token estimate uses 16/512 expert selection, omits Engram and token embedding lookups, and does not model attention-cache traffic, data reuse, or speculative decoding."
+}

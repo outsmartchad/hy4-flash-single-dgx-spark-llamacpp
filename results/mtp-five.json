@@ -1,0 +1,188 @@
+{
+  "engine": "llama.cpp",
+  "endpoint": "http://127.0.0.1:18911",
+  "model": "hy4-flash",
+  "scenario": "decode",
+  "users": 1,
+  "temperature": 0.7,
+  "top_k": 20,
+  "top_p": 1,
+  "thinking": true,
+  "reasoning_effort": "high",
+  "median_decode_tok_s": 22.0002460205214,
+  "waves": [
+    {
+      "wave": 1,
+      "aggregate_decode_tok_s": 21.3365945455009,
+      "requests": [
+        {
+          "prompt_sha256": "3c40426dd4d293d122a2171772b81c010b724bc126608b30526859fa819d3bce",
+          "completion_tokens": 400,
+          "prompt_tokens": 49,
+          "ttft_s": 0.1321918279863894,
+          "decode_tok_s": 21.3365945455009,
+          "finish_reason": "length",
+          "reasoning_seen": true,
+          "timings": {
+            "cache_n": 44,
+            "prompt_n": 5,
+            "prompt_ms": 125.308,
+            "prompt_per_token_ms": 25.061600000000002,
+            "prompt_per_second": 39.90168225492387,
+            "predicted_n": 400,
+            "predicted_ms": 18700.403,
+            "predicted_per_token_ms": 46.868177944862154,
+            "predicted_per_second": 21.336438578355775,
+            "draft_n": 891,
+            "draft_n_accepted": 219
+          }
+        }
+      ]
+    },
+    {
+      "wave": 2,
+      "aggregate_decode_tok_s": 21.807926081525014,
+      "requests": [
+        {
+          "prompt_sha256": "3c40426dd4d293d122a2171772b81c010b724bc126608b30526859fa819d3bce",
+          "completion_tokens": 400,
+          "prompt_tokens": 49,
+          "ttft_s": 0.13503836499876343,
+          "decode_tok_s": 21.807926081525014,
+          "finish_reason": "length",
+          "reasoning_seen": true,
+          "timings": {
+            "cache_n": 44,
+            "prompt_n": 5,
+            "prompt_ms": 124.869,
+            "prompt_per_token_ms": 24.9738,
+            "prompt_per_second": 40.04196397824921,
+            "predicted_n": 400,
+            "predicted_ms": 18296.079,
+            "predicted_per_token_ms": 45.85483458646617,
+            "predicted_per_second": 21.807951310223352,
+            "draft_n": 880,
+            "draft_n_accepted": 222
+          }
+        }
+      ]
+    },
+    {
+      "wave": 3,
+      "aggregate_decode_tok_s": 21.766049654218055,
+      "requests": [
+        {
+          "prompt_sha256": "3c40426dd4d293d122a2171772b81c010b724bc126608b30526859fa819d3bce",
+          "completion_tokens": 400,
+          "prompt_tokens": 49,
+          "ttft_s": 0.13846001899219118,
+          "decode_tok_s": 21.766049654218055,
+          "finish_reason": "length",
+          "reasoning_seen": true,
+          "timings": {
+            "cache_n": 44,
+            "prompt_n": 5,
+            "prompt_ms": 125.37,
+            "prompt_per_token_ms": 25.074,
+            "prompt_per_second": 39.88194942968812,
+            "predicted_n": 400,
+            "predicted_ms": 18331.101,
+            "predicted_per_token_ms": 45.94260902255639,
+            "predicted_per_second": 21.7662867058558,
+            "draft_n": 881,
+            "draft_n_accepted": 222
+          }
+        }
+      ]
+    },
+    {
+      "wave": 4,
+      "aggregate_decode_tok_s": 22.192565959517783,
+      "requests": [
+        {
+          "prompt_sha256": "3c40426dd4d293d122a2171772b81c010b724bc126608b30526859fa819d3bce",
+          "completion_tokens": 400,
+          "prompt_tokens": 49,
+          "ttft_s": 0.13616558400099166,
+          "decode_tok_s": 22.192565959517783,
+          "finish_reason": "length",
+          "reasoning_seen": true,
+          "timings": {
+            "cache_n": 44,
+            "prompt_n": 5,
+            "prompt_ms": 124.201,
+            "prompt_per_token_ms": 24.8402,
+            "prompt_per_second": 40.25732482025105,
+            "predicted_n": 400,
+            "predicted_ms": 17978.433,
+            "predicted_per_token_ms": 45.05872932330827,
+            "predicted_per_second": 22.193257888493395,
+            "draft_n": 883,
+            "draft_n_accepted": 222
+          }
+        }
+      ]
+    },
+    {
+      "wave": 5,
+      "aggregate_decode_tok_s": 23.492041158982687,
+      "requests": [
+        {
+          "prompt_sha256": "3c40426dd4d293d122a2171772b81c010b724bc126608b30526859fa819d3bce",
+          "completion_tokens": 400,
+          "prompt_tokens": 49,
+          "ttft_s": 0.13570769497891888,
+          "decode_tok_s": 23.492041158982687,
+          "finish_reason": "length",
+          "reasoning_seen": true,
+          "timings": {
+            "cache_n": 44,
+            "prompt_n": 5,
+            "prompt_ms": 124.671,
+            "prompt_per_token_ms": 24.9342,
+            "prompt_per_second": 40.10555782820383,
+            "predicted_n": 400,
+            "predicted_ms": 16983.877,
+            "predicted_per_token_ms": 42.56610776942356,
+            "predicted_per_second": 23.49286914878152,
+            "draft_n": 834,
+            "draft_n_accepted": 232
+          }
+        }
+      ]
+    },
+    {
+      "wave": 6,
+      "aggregate_decode_tok_s": 23.079181378193613,
+      "requests": [
+        {
+          "prompt_sha256": "3c40426dd4d293d122a2171772b81c010b724bc126608b30526859fa819d3bce",
+          "completion_tokens": 400,
+          "prompt_tokens": 49,
+          "ttft_s": 0.13562804300454445,
+          "decode_tok_s": 23.079181378193613,
+          "finish_reason": "length",
+          "reasoning_seen": true,
+          "timings": {
+            "cache_n": 44,
+            "prompt_n": 5,
+            "prompt_ms": 125.084,
+            "prompt_per_token_ms": 25.0168,
+            "prompt_per_second": 39.973138051229576,
+            "predicted_n": 400,
+            "predicted_ms": 17287.434,
+            "predicted_per_token_ms": 43.3269022556391,
+            "predicted_per_second": 23.08034841955145,
+            "draft_n": 824,
+            "draft_n_accepted": 233
+          }
+        }
+      ]
+    }
+  ],
+  "spec_counters_delta_including_warmup": {
+    "spec_decode_num_draft_tokens_total": 5224.0,
+    "spec_decode_num_accepted_tokens_total": 1374.0,
+    "spec_decode_num_drafts_total": 1049.0
+  }
+}
