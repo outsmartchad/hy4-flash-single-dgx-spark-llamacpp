@@ -32,3 +32,19 @@ python3 -B bin/benchmark.py --scenario prefill --output prefill.json
 ```
 
 The tests use only synthetic prompts. The benchmark reports API token counts and the exact needle result separate from throughput. Prose decode includes thinking and counts tokens between the first and last emitted content or reasoning events. The prefill probe reports engine prefill and client TTFT for a unique prompt at each size.
+
+## Five-user short-prompt decode
+
+Run a separate server with five slots and the same total context budget:
+
+```bash
+HY4_PARALLEL=5 HY4_CONTEXT=196608 HY4_SPECULATION=off ./bin/recipe.sh serve fast
+```
+
+From a second terminal, send three waves of concurrent requests:
+
+```bash
+python3 -B bin/benchmark.py --scenario decode --users 5 --repeats 3 --output c5-off.json
+```
+
+For the MTP comparison, restart the server with `HY4_SPECULATION=mtp` and `HY4_DRAFT_MAX=1` or `HY4_DRAFT_MAX=3`, then use a new output filename. The context budget is shared across slots. The 32K and 128K cold-prefill figures in the README were measured on the one-slot server.

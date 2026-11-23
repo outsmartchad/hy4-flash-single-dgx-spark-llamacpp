@@ -126,9 +126,15 @@ def run_decode(port, users, repeats):
         aggregate = sum(row["completion_tokens"] - 1 for row in rows) / (
             max(row["last"] for row in rows) - min(row["first"] for row in rows)
         )
+        overlap = min(row["last"] for row in rows) - max(row["first"] for row in rows)
+        first_arrival = min(row["first"] for row in rows)
         for row in rows:
-            del row["first"], row["last"]
-        waves.append({"wave": index + 1, "aggregate_decode_tok_s": aggregate, "requests": rows})
+            row["first_offset_s"] = row.pop("first") - first_arrival
+            row["last_offset_s"] = row.pop("last") - first_arrival
+        if users > 1 and overlap <= 0:
+            raise RuntimeError("The requested streams did not all decode concurrently")
+        waves.append({"wave": index + 1, "aggregate_decode_tok_s": aggregate,
+                      "all_users_overlap_s": overlap, "requests": rows})
         print(f"Prose C{users} {index + 1}/{repeats} {aggregate:.2f} tok/s", flush=True)
     return {"users": users, "temperature": 0.7, "top_k": 20, "top_p": 1, "thinking": True, "reasoning_effort": "high",
             "median_decode_tok_s": statistics.median(row["aggregate_decode_tok_s"] for row in waves),

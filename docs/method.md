@@ -20,6 +20,10 @@ Use MTP ×3 as the repeated control and interleave the variants to measure drift
 
 Keep a candidate if its median decode is over 3% faster than each neighboring control and its median TTFT increases by at most 3% against each. Compare raw waves and check the selected setup separately. Keeping one checkpoint fixed isolates changes in speculative decoding within this runtime. The Spark Fast and Standard GGUFs have their own weight layouts. [Inference optimisation methodology](https://github.com/sybil-solutions/inference-optimisation-skill/tree/fda968e7fc1996aa23c67139c755fe541c9d4be0)
 
+## Five concurrent users
+
+The five-user follow-up measures short-prompt decode separately, with five slots and a total configured context of 196,608. A unique request identifier distinguishes each concurrent stream in the same wave. The client uses three waves per profile and timestamps each stream from first to last emitted token. The overlapping decode interval is the earliest last token minus the latest first token. The client rejects a wave if this interval is zero or negative. Aggregate decode uses total post-first tokens divided by the time from the earliest first token to the latest last token.
+
 ## Cold prefill and retrieval
 
 For each of the 32K and 128K targets, generate a unique synthetic document containing a randomly seeded audit code in its middle. Ask the engine to apply its chat template, then size the document with its tokenizer. Send the document once with the checkpoint’s `reasoning_effort=no_think`, prefix-cache reuse disabled and a 32-token output limit. Require the actual prompt count to be within 1.5% of the target and the engine's cache count to be zero. “Cold” describes the prompt cache. It does not require dropping Linux page cache or reloading weights.

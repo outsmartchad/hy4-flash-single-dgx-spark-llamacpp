@@ -1,6 +1,6 @@
 # HY4 Flash on one DGX Spark
 
-![HY4 Flash on one DGX Spark. Single-user thinking-on prose decode reached 30.49 tok/s peak and 28.12 tok/s median. Cold prefill reached 696 tok/s at 32K and 586 tok/s at 128K.](docs/assets/hy4-flash-benchmark.png)
+![HY4 Flash on one DGX Spark. Thinking-on prose decode reached 30.49 tok/s at one user with MTP ×3 and 61.15 tok/s aggregate at five users with MTP off. Cold prefill reached 696 tok/s at 32K and 586 tok/s at 128K.](docs/assets/hy4-flash-benchmark.png)
 
 Tencent's HY4 Flash, served with AngelSlim's Spark CUDA patch for llama.cpp and the Spark-4Bit-Fast GGUF. The **148.65 GiB** checkpoint fits this deployment because the largest table is memory-mapped from SSD. The patched engine reads selected Engram rows on the CPU and runs the main model on the GB10. [Model architecture](docs/how-it-works.md)
 
@@ -41,6 +41,18 @@ Measured on November 22, 2026 on an ARM64 DGX Spark with Ubuntu 24.04.5 LTS, NVI
 | **MTP ×3, final** | 28.12 tok/s | 30.49 tok/s | 135 ms |
 
 The final MTP ×3 run had a 9% higher median decode rate than MTP off. MTP ×5 accepted 26% of draft proposals. The final ×3 run accepted 41%. The profile keeps the ×3 limit. [Benchmark method and selection rule](docs/method.md) · [Raw results](results/)
+
+### Five concurrent users
+
+The November 23 short-prose replay used five serving slots, the same Fast GGUF and F16 KV cache, and 196,608 configured context tokens shared by the server. Every wave ran five simultaneous thinking-on requests with 400 output tokens apiece.
+
+| Profile | Median aggregate | Fastest aggregate | Median TTFT in fastest wave |
+| --- | ---: | ---: | ---: |
+| [MTP ×3](results/c5-mtp3.json) | 54.22 tok/s | 56.09 tok/s | 707 ms |
+| [MTP ×1](results/c5-mtp1.json) | 57.81 tok/s | 59.21 tok/s | 211 ms |
+| **[MTP off](results/c5-off.json)** | **60.29 tok/s** | **61.15 tok/s** | **202 ms** |
+
+MTP off had the highest observed throughput in this five-slot test. All five streams decoded together for over 27 seconds in every wave. The card's cold-prefill and GPU-memory figures come from the separate one-slot run. Five simultaneous full-context prompts were outside this measurement.
 
 ### Cold prefill
 
