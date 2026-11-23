@@ -1,0 +1,17 @@
+{
+  "chat": {
+    "finish_reason": "stop",
+    "passed": true
+  },
+  "reasoning": {
+    "separate_reasoning": true,
+    "passed": true
+  },
+  "traditional_chinese": {
+    "passed": true
+  },
+  "tool_round_trip": {
+    "called_expected_tool": true,
+    "passed": true
+  }
+}

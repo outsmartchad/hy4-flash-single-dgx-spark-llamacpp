@@ -1,6 +1,6 @@
 # HY4 Flash on one DGX Spark
 
-![HY4 Flash on one DGX Spark. Thinking-on prose decode reached 30.49 tok/s at one user with MTP ×3 and 61.15 tok/s aggregate at five users with MTP off. Cold prefill reached 696 tok/s at 32K and 586 tok/s at 128K.](docs/assets/hy4-flash-benchmark.png)
+![HY4 Flash on one DGX Spark. Thinking-on prose decode reached 32.00 tok/s at one user with MTP ×2 and 61.15 tok/s aggregate at five users with MTP off. Cold prefill reached 695 tok/s at 32K and 594 tok/s at 128K.](docs/assets/hy4-flash-benchmark.png)
 
 Tencent's HY4 Flash, served with AngelSlim's Spark CUDA patch for llama.cpp and the Spark-4Bit-Fast GGUF. The **148.65 GiB** checkpoint fits this deployment because the largest table is memory-mapped from SSD. The patched engine reads selected Engram rows on the CPU and runs the main model on the GB10. [Model architecture](docs/how-it-works.md)
 
@@ -29,6 +29,10 @@ The download resumes partial transfers and checks SHA-256. The launcher uses a p
 
 ## Measurements
 
+The current one-user default is **MTP ×2**. On November 23, it reached **32.00 tok/s peak**, **30.96 tok/s median** and **135 ms median TTFT** in the six-request qualification replay. The candidate improved median decode by 10.4–10.8% against its adjacent MTP ×3 controls. For five users, the fastest observed result remained **MTP off**. [Tuning report and raw data](docs/tuning-2026-11-23.md)
+
+### Initial one-user sweep
+
 Measured on November 22, 2026 on an ARM64 DGX Spark with Ubuntu 24.04.5 LTS, NVIDIA driver 580.178.04 and CUDA 13.0.88. Requests went directly to the Spark's loopback API. The comparison uses a single session, a thinking-on prose prompt and six measured requests per profile. Only speculative decoding changes between profiles.
 
 | Profile | Median decode | Fastest request | Median TTFT |
@@ -40,7 +44,7 @@ Measured on November 22, 2026 on an ARM64 DGX Spark with Ubuntu 24.04.5 LTS, NVI
 | MTP ×3, control C | 27.31 tok/s | 28.65 tok/s | 135 ms |
 | **MTP ×3, final** | 28.12 tok/s | 30.49 tok/s | 135 ms |
 
-The final MTP ×3 run had a 9% higher median decode rate than MTP off. MTP ×5 accepted 26% of draft proposals. The final ×3 run accepted 41%. The profile keeps the ×3 limit. [Benchmark method and selection rule](docs/method.md) · [Raw results](results/)
+The final MTP ×3 run had a 9% higher median decode rate than MTP off. MTP ×5 accepted 26% of draft proposals. The final ×3 run accepted 41%. This sweep selected ×3 for the initial recipe. [Benchmark method and selection rule](docs/method.md) · [Raw results](results/)
 
 ### Five concurrent users
 
@@ -58,16 +62,16 @@ MTP off had the highest observed throughput in this five-slot test. All five str
 
 | Actual input tokens | Engine prefill | Client prefill | TTFT | Exact retrieval |
 | ---: | ---: | ---: | ---: | :--- |
-| 32,762 | 696.9 tok/s | 696.3 tok/s | 47.05 s | Passed |
-| 131,073 | 586.8 tok/s | 586.1 tok/s | 223.65 s | Passed |
+| 32,762 | 695.7 tok/s | 695.1 tok/s | 47.13 s | Passed |
+| 131,073 | 594.9 tok/s | 594.1 tok/s | 220.61 s | Passed |
 
-Both requests had zero cached prompt tokens. Client rate includes time to first streamed token. [Cold-prefill inputs and timings](results/final-prefill.json)
+Both MTP ×2 requests had zero cached prompt tokens. Client rate includes time to first streamed token. [MTP ×2 timings](results/tuning-20261123/qualification-prefill.json) · [Original MTP ×3 timings](results/final-prefill.json)
 
 ### Memory and smoke checks
 
-The final server reached **92.7 GiB sampled GPU-process allocation**. The lowest system `MemAvailable` was **22.3 GiB** during startup and the timed requests. The driver and Linux measure different aspects of the same unified memory pool. [Memory samples](results/final.memory.csv)
+The MTP ×2 qualification server reached **92.7 GiB sampled GPU-process allocation**. The lowest system `MemAvailable` was **22.3 GiB** during startup and the timed requests. The driver and Linux measure different aspects of the same unified memory pool. [Memory samples](results/tuning-20261123/qualification.memory.csv)
 
-The first MTP ×3 run passed basic chat, separate reasoning, exact Traditional Chinese copying, and a synthetic tool-call round trip. The validation covers text and one active session. [Smoke checks](results/checks.json)
+The MTP ×2 run passed basic chat, separate reasoning, exact Traditional Chinese copying, and a synthetic tool-call round trip. The validation covers text and one active session. [MTP ×2 checks](results/tuning-20261123/qualification-checks.json) · [Original MTP ×3 checks](results/checks.json)
 
 ## Files
 

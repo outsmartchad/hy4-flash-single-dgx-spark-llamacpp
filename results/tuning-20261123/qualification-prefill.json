@@ -1,0 +1,62 @@
+{
+  "engine": "llama.cpp",
+  "endpoint": "http://127.0.0.1:18911",
+  "model": "hy4-flash",
+  "scenario": "prefill",
+  "prefill": [
+    {
+      "prompt_sha256": "f6f3d37d67211ca7f2a680c95107b422d920b43a523738d5aed925671dce0028",
+      "completion_tokens": 9,
+      "prompt_tokens": 32762,
+      "ttft_s": 47.13292783201905,
+      "decode_tok_s": 31.652397175808925,
+      "finish_reason": "stop",
+      "reasoning_seen": false,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 32762,
+        "prompt_ms": 47090.582,
+        "prompt_per_token_ms": 1.4373537024601672,
+        "prompt_per_second": 695.7229791723533,
+        "predicted_n": 9,
+        "predicted_ms": 251.704,
+        "predicted_per_token_ms": 31.463,
+        "predicted_per_second": 31.783364586975175,
+        "draft_n": 6,
+        "draft_n_accepted": 6
+      },
+      "target_prompt_tokens": 32768,
+      "sized_prompt_tokens": 32762,
+      "audit_code_matched": true,
+      "engine_prefill_tok_s": 695.7229791723533,
+      "client_prefill_tok_s": 695.0979178879617
+    },
+    {
+      "prompt_sha256": "c6c922a5748794c71b4eb22d881605ac64ef931a704bcd44b8bae0274a8724f6",
+      "completion_tokens": 8,
+      "prompt_tokens": 131073,
+      "ttft_s": 220.61400453798706,
+      "decode_tok_s": 41.906214314925926,
+      "finish_reason": "stop",
+      "reasoning_seen": false,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 131073,
+        "prompt_ms": 220309.779,
+        "prompt_per_token_ms": 1.6808173994644207,
+        "prompt_per_second": 594.9486245910127,
+        "predicted_n": 8,
+        "predicted_ms": 258.189,
+        "predicted_per_token_ms": 36.88414285714286,
+        "predicted_per_second": 27.111921886679912,
+        "draft_n": 6,
+        "draft_n_accepted": 4
+      },
+      "target_prompt_tokens": 131072,
+      "sized_prompt_tokens": 131073,
+      "audit_code_matched": true,
+      "engine_prefill_tok_s": 594.9486245910128,
+      "client_prefill_tok_s": 594.1281936044583
+    }
+  ]
+}

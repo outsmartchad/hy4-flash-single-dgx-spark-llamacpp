@@ -21,7 +21,9 @@ curl -fsS http://127.0.0.1:18911/v1/chat/completions \
   -d '{"model":"hy4-flash","messages":[{"role":"user","content":"Explain what a hash table does in one sentence."}],"max_tokens":64,"reasoning_effort":"no_think","chat_template_kwargs":{"enable_thinking":false}}'
 ```
 
-The launcher defaults to one slot and 196,608 configured context, with F16 KV and disk-backed Engram lookup. `HY4_SPECULATION=off` disables speculation. `HY4_DRAFT_MAX` chooses the limit when the engine runs the MTP route. The target can clamp the requested draft count based on the head and serving mode.
+The launcher defaults to one slot and 196,608 configured context, with F16 KV, disk-backed Engram lookup and MTP ×2. `HY4_SPECULATION=off` disables speculation. `HY4_DRAFT_MAX` sets the maximum draft length. Set it to `3` to reproduce the original one-user sweep. The engine can clamp the requested count based on the head and serving mode.
+
+Set `HY4_LOAD_MODE=dio` to try Direct I/O for the upfront weight load. The Engram table still uses lazy memory mapping. The default is `mmap`. On Linux, the engine can fall back to buffered I/O when the filesystem rejects direct reads.
 
 Run the quality checks and the two timing workloads against the same server:
 
