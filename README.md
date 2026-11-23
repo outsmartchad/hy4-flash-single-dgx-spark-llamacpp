@@ -1,5 +1,7 @@
 # HY4 Flash on one DGX Spark
 
+![HY4 Flash on one DGX Spark. Single-user thinking-on prose decode reached 30.49 tok/s peak and 28.12 tok/s median. Cold prefill reached 696 tok/s at 32K and 586 tok/s at 128K.](docs/assets/hy4-flash-benchmark.png)
+
 Tencent's HY4 Flash, served with AngelSlim's Spark CUDA patch for llama.cpp and the Spark-4Bit-Fast GGUF. The **148.65 GiB** checkpoint fits this deployment because the largest table is memory-mapped from SSD. The patched engine reads selected Engram rows on the CPU and runs the main model on the GB10. [Model architecture](docs/how-it-works.md)
 
 ## Run it
