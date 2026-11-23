@@ -9,5 +9,6 @@ The JSON files retain each request's prompt hash, token counts and API timing fi
 - `checks.json` records the localhost chat, reasoning, Traditional Chinese and synthetic tool round trip on the first MTP ×3 server.
 - `device.json` contains the CUDA copy and cuBLAS results. `weights.json` totals byte ranges from the verified GGUF tensor descriptors.
 - [`tuning-20261123/`](tuning-20261123/) contains the startup, MTP depth, CUDA graph and qualification data for the follow-up. The `.startup-s` files record whole seconds from launch to loopback health. The memory CSVs also sample GPU utilization, temperature and graphics clocks.
+- [`tuning-20261123-probabilistic/`](tuning-20261123-probabilistic/) contains all four controls, three candidate arms, and the fresh probabilistic MTP ×2 qualification. Each decode profile includes its request timings, variant settings and sampled memory. The qualification also includes chat checks and cold-prefill retrieval data.
 
 [Method and thresholds](../docs/method.md) · [How to reproduce the startup and smoke checks](../docs/reproduce.md)

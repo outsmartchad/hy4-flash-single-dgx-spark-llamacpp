@@ -10,7 +10,7 @@ The MTP limit is the maximum number of draft proposals, with acceptance decided 
 
 ## Tuning order
 
-This sequence describes the original November 22 tuning run. The [November 23 follow-up](tuning-2026-11-23.md) records the additional controls and the MTP ×2 result.
+This sequence describes the original November 22 tuning run. The November 23 tuning report records the depth sweep and the [probabilistic MTP ×2 follow-up](tuning-2026-11-23.md#probabilistic-mtp-2).
 
 Use MTP ×3 as the repeated control and interleave the variants to measure drift between process restarts.
 

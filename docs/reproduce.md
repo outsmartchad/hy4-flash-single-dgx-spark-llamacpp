@@ -21,7 +21,7 @@ curl -fsS http://127.0.0.1:18911/v1/chat/completions \
   -d '{"model":"hy4-flash","messages":[{"role":"user","content":"Explain what a hash table does in one sentence."}],"max_tokens":64,"reasoning_effort":"no_think","chat_template_kwargs":{"enable_thinking":false}}'
 ```
 
-The launcher defaults to one slot and 196,608 configured context, with F16 KV, disk-backed Engram lookup and MTP ×2. `HY4_SPECULATION=off` disables speculation. `HY4_DRAFT_MAX` sets the maximum draft length. Set it to `3` to reproduce the original one-user sweep. The engine can clamp the requested count based on the head and serving mode.
+The launcher defaults to one slot and 196,608 configured context, with F16 KV, disk-backed Engram lookup and probabilistic MTP ×2. Set `LLAMA_ARG_SPEC_DRAFT_SAMPLING=greedy` to reproduce the previous one-user control. Add `HY4_DRAFT_MAX=3` to reproduce the original one-user baseline. `HY4_SPECULATION=off` disables speculation. The engine can clamp the draft length requested through `HY4_DRAFT_MAX`.
 
 Set `HY4_LOAD_MODE=dio` to try Direct I/O for the upfront weight load. The Engram table still uses lazy memory mapping. The default is `mmap`. On Linux, the engine can fall back to buffered I/O when the filesystem rejects direct reads.
 
@@ -49,4 +49,4 @@ From a second terminal, send three waves of concurrent requests:
 python3 -B bin/benchmark.py --scenario decode --users 5 --repeats 3 --output c5-off.json
 ```
 
-For the MTP comparison, restart the server with `HY4_SPECULATION=mtp` and `HY4_DRAFT_MAX=1` or `HY4_DRAFT_MAX=3`, then use a new output filename. The context budget is shared across slots. The 32K and 128K cold-prefill figures in the README were measured on the one-slot server.
+For the MTP comparison, restart the server with `HY4_SPECULATION=mtp LLAMA_ARG_SPEC_DRAFT_SAMPLING=greedy` and `HY4_DRAFT_MAX=1` or `HY4_DRAFT_MAX=3`, then use a new output filename. The context budget is shared across slots. The 32K and 128K cold-prefill figures in the README were measured on the one-slot server.

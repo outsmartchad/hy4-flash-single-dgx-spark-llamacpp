@@ -1,0 +1,62 @@
+{
+  "engine": "llama.cpp",
+  "endpoint": "http://127.0.0.1:18911",
+  "model": "hy4-flash",
+  "scenario": "prefill",
+  "prefill": [
+    {
+      "prompt_sha256": "f6f3d37d67211ca7f2a680c95107b422d920b43a523738d5aed925671dce0028",
+      "completion_tokens": 9,
+      "prompt_tokens": 32762,
+      "ttft_s": 46.68169689696515,
+      "decode_tok_s": 31.231222224575465,
+      "finish_reason": "stop",
+      "reasoning_seen": false,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 32762,
+        "prompt_ms": 46640.592,
+        "prompt_per_token_ms": 1.4236185825041205,
+        "prompt_per_second": 702.435337870497,
+        "predicted_n": 9,
+        "predicted_ms": 255.757,
+        "predicted_per_token_ms": 31.969625,
+        "predicted_per_second": 31.27969126944717,
+        "draft_n": 6,
+        "draft_n_accepted": 6
+      },
+      "target_prompt_tokens": 32768,
+      "sized_prompt_tokens": 32762,
+      "audit_code_matched": true,
+      "engine_prefill_tok_s": 702.435337870497,
+      "client_prefill_tok_s": 701.8168185340733
+    },
+    {
+      "prompt_sha256": "c6c922a5748794c71b4eb22d881605ac64ef931a704bcd44b8bae0274a8724f6",
+      "completion_tokens": 8,
+      "prompt_tokens": 131073,
+      "ttft_s": 221.76798591995612,
+      "decode_tok_s": 41.68237843525372,
+      "finish_reason": "stop",
+      "reasoning_seen": false,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 131073,
+        "prompt_ms": 221465.144,
+        "prompt_per_token_ms": 1.6896320676264371,
+        "prompt_per_second": 591.8448277350589,
+        "predicted_n": 8,
+        "predicted_ms": 249.936,
+        "predicted_per_token_ms": 35.70514285714286,
+        "predicted_per_second": 28.00716983547788,
+        "draft_n": 6,
+        "draft_n_accepted": 4
+      },
+      "target_prompt_tokens": 131072,
+      "sized_prompt_tokens": 131073,
+      "audit_code_matched": true,
+      "engine_prefill_tok_s": 591.8448277350589,
+      "client_prefill_tok_s": 591.0366162918973
+    }
+  ]
+}

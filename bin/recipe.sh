@@ -94,9 +94,15 @@ case "${1:-}" in
             mmap|dio) ;;
             *) printf 'HY4_LOAD_MODE must be mmap or dio.\n' >&2; exit 2 ;;
         esac
+        parallel=${HY4_PARALLEL:-1}
         profile=${HY4_SPECULATION:-mtp}
         case "$profile" in
-            mtp) draft=(--spec-type draft-mtp --spec-draft-n-max "${HY4_DRAFT_MAX:-2}") ;;
+            mtp)
+                if [[ "$parallel" == 1 ]]; then
+                    export LLAMA_ARG_SPEC_DRAFT_SAMPLING=${LLAMA_ARG_SPEC_DRAFT_SAMPLING:-probabilistic}
+                fi
+                draft=(--spec-type draft-mtp --spec-draft-n-max "${HY4_DRAFT_MAX:-2}")
+                ;;
             off) draft=(--spec-type none) ;;
             *) printf 'HY4_SPECULATION must be mtp or off.\n' >&2; exit 2 ;;
         esac
@@ -116,7 +122,7 @@ case "${1:-}" in
         export GGML_CUDA_FA_576_WHOLE_TILES=0
         exec "$build_dir/bin/llama-server" \
             --model "$data_dir/$weight" --alias hy4-flash --host 127.0.0.1 --port "$port" \
-            --ctx-size "${HY4_CONTEXT:-196608}" --parallel "${HY4_PARALLEL:-1}" \
+            --ctx-size "${HY4_CONTEXT:-196608}" --parallel "$parallel" \
             --n-gpu-layers 999 --split-mode none \
             --override-tensor '^per_layer_token_embd\.weight$=CPU,^token_embd\.weight$=CUDA0' \
             --load-mode "$load_mode" --lazy-mode on --no-host --fit off --flash-attn on \

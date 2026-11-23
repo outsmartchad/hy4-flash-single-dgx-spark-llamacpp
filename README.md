@@ -1,6 +1,6 @@
 # HY4 Flash on one DGX Spark
 
-![HY4 Flash on one DGX Spark. Thinking-on prose decode reached 32.00 tok/s at one user with MTP ×2 and 61.15 tok/s aggregate at five users with MTP off. Cold prefill reached 695 tok/s at 32K and 594 tok/s at 128K.](docs/assets/hy4-flash-benchmark.png)
+![HY4 Flash on one DGX Spark. Thinking-on prose decode reached 34.72 tok/s at one user with probabilistic MTP ×2 and 61.15 tok/s aggregate at five users with MTP off. The card shows 695 tok/s at 32K and 594 tok/s at 128K from the earlier MTP ×2 cold-prefill run.](docs/assets/hy4-flash-benchmark.png)
 
 Tencent's HY4 Flash, served with AngelSlim's Spark CUDA patch for llama.cpp and the Spark-4Bit-Fast GGUF. The **148.65 GiB** checkpoint fits this deployment because the largest table is memory-mapped from SSD. The patched engine reads selected Engram rows on the CPU and runs the main model on the GB10. [Model architecture](docs/how-it-works.md)
 
@@ -29,7 +29,16 @@ The download resumes partial transfers and checks SHA-256. The launcher uses a p
 
 ## Measurements
 
-The current one-user default is **MTP ×2**. On November 23, it reached **32.00 tok/s peak**, **30.96 tok/s median** and **135 ms median TTFT** in the six-request qualification replay. The candidate improved median decode by 10.4–10.8% against its adjacent MTP ×3 controls. For five users, the fastest observed result remained **MTP off**. [Tuning report and raw data](docs/tuning-2026-11-23.md)
+### One user
+
+The default is **probabilistic MTP ×2**. In the November 23 qualification replay, all six thinking-on prose requests exceeded 32 tok/s. The weights, target sampling settings, context, and KV cache matched the greedy MTP ×2 controls. [Tuning report and raw data](docs/tuning-2026-11-23.md#probabilistic-mtp-2)
+
+| Profile | Median decode | Fastest request | Median TTFT |
+| --- | ---: | ---: | ---: |
+| [Greedy MTP ×2, control A](results/tuning-20261123-probabilistic/control-a.json) | 30.75 tok/s | 31.97 tok/s | 135 ms |
+| [Probabilistic MTP ×2](results/tuning-20261123-probabilistic/draft-prob.json) | 32.49 tok/s | 34.40 tok/s | 135 ms |
+| [Greedy MTP ×2, control B](results/tuning-20261123-probabilistic/control-b.json) | 30.55 tok/s | 32.34 tok/s | 134 ms |
+| **[Probabilistic MTP ×2, fresh replay](results/tuning-20261123-probabilistic/qualification.json)** | **32.76 tok/s** | **34.72 tok/s** | **134 ms** |
 
 ### Initial one-user sweep
 
@@ -56,22 +65,22 @@ The November 23 short-prose replay used five serving slots, the same Fast GGUF a
 | [MTP ×1](results/c5-mtp1.json) | 57.81 tok/s | 59.21 tok/s | 211 ms |
 | **[MTP off](results/c5-off.json)** | **60.29 tok/s** | **61.15 tok/s** | **202 ms** |
 
-MTP off had the highest observed throughput in this five-slot test. All five streams decoded together for over 27 seconds in every wave. The card's cold-prefill and GPU-memory figures come from the separate one-slot run. Five simultaneous full-context prompts were outside this measurement.
+MTP off had the highest observed throughput in this five-slot test. All five streams decoded together for over 27 seconds in every wave. Five simultaneous full-context prompts were outside this measurement.
 
 ### Cold prefill
 
 | Actual input tokens | Engine prefill | Client prefill | TTFT | Exact retrieval |
 | ---: | ---: | ---: | ---: | :--- |
-| 32,762 | 695.7 tok/s | 695.1 tok/s | 47.13 s | Passed |
-| 131,073 | 594.9 tok/s | 594.1 tok/s | 220.61 s | Passed |
+| 32,762 | 702.4 tok/s | 701.8 tok/s | 46.68 s | Passed |
+| 131,073 | 591.8 tok/s | 591.0 tok/s | 221.77 s | Passed |
 
-Both MTP ×2 requests had zero cached prompt tokens. Client rate includes time to first streamed token. [MTP ×2 timings](results/tuning-20261123/qualification-prefill.json) · [Original MTP ×3 timings](results/final-prefill.json)
+Both requests ran on the probabilistic MTP ×2 preset with thinking off and zero cached prompt tokens. Client rate includes time to first streamed token. The artwork retains the earlier greedy MTP ×2 prefill measurements. [Latest prefill data](results/tuning-20261123-probabilistic/qualification-prefill.json) · [Prefill data shown on the card](results/tuning-20261123/qualification-prefill.json)
 
 ### Memory and smoke checks
 
-The MTP ×2 qualification server reached **92.7 GiB sampled GPU-process allocation**. The lowest system `MemAvailable` was **22.3 GiB** during startup and the timed requests. The driver and Linux measure different aspects of the same unified memory pool. [Memory samples](results/tuning-20261123/qualification.memory.csv)
+The probabilistic MTP ×2 qualification server reached **92.7 GiB sampled GPU-process allocation**. The lowest system `MemAvailable` was **22.3 GiB** during startup and the timed requests. The driver and Linux measure different aspects of the same unified memory pool. [Memory samples](results/tuning-20261123-probabilistic/qualification.memory.csv)
 
-The MTP ×2 run passed basic chat, separate reasoning, exact Traditional Chinese copying, and a synthetic tool-call round trip. The validation covers text and one active session. [MTP ×2 checks](results/tuning-20261123/qualification-checks.json) · [Original MTP ×3 checks](results/checks.json)
+The one-slot qualification passed basic chat, separate reasoning, exact Traditional Chinese copying, and a synthetic tool-call round trip. [Qualification checks](results/tuning-20261123-probabilistic/qualification-checks.json)
 
 ## Files
 
