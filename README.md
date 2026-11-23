@@ -1,6 +1,6 @@
 # HY4 Flash on one DGX Spark
 
-![HY4 Flash on one DGX Spark. Thinking-on prose decode reached 34.72 tok/s at one user with probabilistic MTP ×2 and 61.15 tok/s aggregate at five users with MTP off. The card shows 695 tok/s at 32K and 594 tok/s at 128K from the earlier MTP ×2 cold-prefill run.](docs/assets/hy4-flash-benchmark.png)
+![HY4 Flash on one DGX Spark over a monochrome cityscape. Thinking-on prose decode reached 34.72 tok/s at one user with probabilistic MTP ×2 and 61.15 tok/s aggregate at five users with MTP off. The card shows 695 tok/s at 32K and 594 tok/s at 128K from the earlier MTP ×2 cold-prefill run.](docs/assets/hy4-flash-benchmark.png)
 
 Tencent's HY4 Flash, served with AngelSlim's Spark CUDA patch for llama.cpp and the Spark-4Bit-Fast GGUF. The **148.65 GiB** checkpoint fits this deployment because the largest table is memory-mapped from SSD. The patched engine reads selected Engram rows on the CPU and runs the main model on the GB10. [Model architecture](docs/how-it-works.md)
 
